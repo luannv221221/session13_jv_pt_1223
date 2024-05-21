@@ -1,8 +1,10 @@
 package com.ra.model.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
+@Table(name = "categories")
 public class Category {
     @Id
     @Column(name = "id")
@@ -13,13 +15,16 @@ public class Category {
     @Column(name = "status")
     private Boolean categoryStatus;
 
+    @OneToMany(mappedBy = "category")
+    private Set<Product> products;
     public Category() {
     }
 
-    public Category(Integer id, String categoryName, Boolean categoryStatus) {
+    public Category(Integer id, String categoryName, Boolean categoryStatus, Set<Product> products) {
         this.id = id;
         this.categoryName = categoryName;
         this.categoryStatus = categoryStatus;
+        this.products = products;
     }
 
     public Integer getId() {
@@ -44,5 +49,13 @@ public class Category {
 
     public void setCategoryStatus(Boolean categoryStatus) {
         this.categoryStatus = categoryStatus;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 }
