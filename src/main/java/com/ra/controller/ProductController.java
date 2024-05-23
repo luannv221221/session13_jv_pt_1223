@@ -7,12 +7,14 @@ import com.ra.model.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -43,11 +45,16 @@ public class ProductController {
         return "product/add";
     }
     @PostMapping("/add-product")
-    public String save(
-            @ModelAttribute("product") Product product,
-            @RequestParam("fileImage")MultipartFile file){
+    public String save(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult,
+                       @RequestParam(value = "fileImage",required = false) MultipartFile file
+            ){
+        System.out.println(bindingResult);
+        if(bindingResult.hasErrors()){
+            System.out.println("loi");
+            return "redirect:/add-product";
+        }
        // xu ly upload file
-        // laays teen file
+//         laays teen file
         String fileName = file.getOriginalFilename();
         String path = "D:\\Luannv\\JAVA-PT-2312\\MD3\\session13\\src\\main\\webapp\\uploads";
         File destination = new File(path+"/"+fileName);

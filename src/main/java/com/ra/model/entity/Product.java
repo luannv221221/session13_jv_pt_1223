@@ -1,6 +1,10 @@
 package com.ra.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "products")
@@ -9,8 +13,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+    @NotBlank()
     @Column(name = "product_name",length = 200)
     private String productName;
+
     @Column(name = "price")
     private Float price;
     @Column(name = "image")
