@@ -46,4 +46,19 @@ public class ProductDAOImpl implements ProductDAO{
         }
         return false;
     }
+
+    @Override
+    public List<Product> findByName(String productName) {
+        Session session = sessionFactory.openSession();
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT p.productName FROM Product p where p.productName=:name";
+        try {
+           return session.createQuery(sql).setParameter("name",productName).list();
+        }catch (Exception exception){
+            exception.printStackTrace();
+        } finally {
+            session.close();
+        }
+       return products;
+    }
 }

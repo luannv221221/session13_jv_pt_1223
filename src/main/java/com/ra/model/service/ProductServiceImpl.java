@@ -49,4 +49,13 @@ public class ProductServiceImpl implements ProductService{
         productEntity.setImage(fileName);
         return productDAO.saveOrUpdate(productEntity);
     }
+
+    @Override
+    public Boolean checkProductNameExits(String productName) {
+        List<Product>  products = productDAO.findByName(productName);
+        if(products.size() > 0){
+            return true;
+        }
+        return false; // rong thi tra về true
+    }
 }

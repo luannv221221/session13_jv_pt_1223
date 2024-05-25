@@ -2,6 +2,7 @@ package com.ra.model.entity.dto;
 
 import com.ra.model.entity.Category;
 import com.ra.util.validation.FileNotNull;
+import com.ra.util.validation.Unique;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotNull;
 public class ProductDTO {
     private Integer id;
     @NotBlank(message = "Tên sản phẩm không rỗng")
+    @Unique(message = "Sản phẩm này đã tồn tại")
     private String productName;
     @NotNull(message = "Giá phẩm không rỗng")
     @Min(value = 1,message = "giá phải lớn hơn 0")

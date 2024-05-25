@@ -7,4 +7,5 @@ import java.util.List;
 public interface ProductDAO {
     List<Product> findAll();
     Boolean saveOrUpdate(Product product);
+    List<Product> findByName(String productName);
 }

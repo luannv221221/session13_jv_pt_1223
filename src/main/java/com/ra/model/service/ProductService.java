@@ -8,4 +8,5 @@ import java.util.List;
 public interface ProductService {
     List<Product> getAll();
     Boolean create(ProductDTO product);
+    Boolean checkProductNameExits(String productName);
 }
