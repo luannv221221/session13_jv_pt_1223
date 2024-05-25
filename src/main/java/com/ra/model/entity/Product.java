@@ -12,16 +12,14 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @NotBlank(message = "Tên sản phẩm không rỗng")
-    @Column(name = "product_name",length = 200)
+
+    @Column(name = "product_name",length = 200,unique = true)
     private String productName;
 
-    @NotNull(message = "Giá phẩm không rỗng")
-    @Min(value = 1,message = "giá phải lớn hơn 0")
+
     @Column(name = "price")
     private Float price;
 
-    @NotEmpty(message = "Trường này không được bỏ rỗng")
     @Column(name = "image")
     private String image;
     @ManyToOne

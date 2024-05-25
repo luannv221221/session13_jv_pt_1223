@@ -34,8 +34,8 @@
                 </div>
                 <div class="form-group">
                     <label for="av">Image</label>
-                    <input type="file" class="form-control-file" th:name="fileImage" id="av">
-                    <span class="text-danger" th:errors="*{image}"></span>
+                    <input type="file" class="form-control-file"  th:field="*{fileImage}" id="av">
+                    <span class="text-danger" th:errors="*{fileImage}"></span>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>

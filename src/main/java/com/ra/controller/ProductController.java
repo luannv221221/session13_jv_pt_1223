@@ -2,6 +2,7 @@ package com.ra.controller;
 
 import com.ra.model.entity.Category;
 import com.ra.model.entity.Product;
+import com.ra.model.entity.dto.ProductDTO;
 import com.ra.model.service.CategoryService;
 import com.ra.model.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,37 +39,26 @@ public class ProductController {
         return "product/index";
     }
     @GetMapping("/add-product")
-    public String add(Model model,Product product){
+    public String add(Model model, ProductDTO product){
         List<Category> categories = categoryService.getAll();
         model.addAttribute("categories",categories);
         model.addAttribute("product",product);
         return "product/add";
     }
     @PostMapping("/add-product")
-    public String save(@Valid @ModelAttribute("product") Product product,
+    public String save(@Valid @ModelAttribute("product") ProductDTO product,
                        BindingResult bindingResult,
-                       @RequestParam(value = "fileImage",required = false) MultipartFile file,
                        Model model
             ){
-        System.out.println(bindingResult);
+
         if(bindingResult.hasErrors()){
             List<Category> categories = categoryService.getAll();
             model.addAttribute("categories",categories);
 
             return "product/add";
         }
-       // xu ly upload file
-//         laays teen file
-        String fileName = file.getOriginalFilename();
-        String path = "D:\\Luannv\\JAVA-PT-2312\\MD3\\session13\\src\\main\\webapp\\uploads";
-        File destination = new File(path+"/"+fileName);
-        try {
-            Files.write(destination.toPath(),file.getBytes(), StandardOpenOption.CREATE);
-            product.setImage(fileName);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-//        System.out.println(fileName);
+
+
         productService.create(product);
         return "redirect:/product";
     }
