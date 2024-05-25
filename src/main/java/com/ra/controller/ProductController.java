@@ -45,13 +45,17 @@ public class ProductController {
         return "product/add";
     }
     @PostMapping("/add-product")
-    public String save(@Valid @ModelAttribute("product") Product product, BindingResult bindingResult,
-                       @RequestParam(value = "fileImage",required = false) MultipartFile file
+    public String save(@Valid @ModelAttribute("product") Product product,
+                       BindingResult bindingResult,
+                       @RequestParam(value = "fileImage",required = false) MultipartFile file,
+                       Model model
             ){
         System.out.println(bindingResult);
         if(bindingResult.hasErrors()){
-            System.out.println("loi");
-            return "redirect:/add-product";
+            List<Category> categories = categoryService.getAll();
+            model.addAttribute("categories",categories);
+
+            return "product/add";
         }
        // xu ly upload file
 //         laays teen file

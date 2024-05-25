@@ -19,10 +19,12 @@
                 <div class="form-group">
                     <label for="name">Product Name</label>
                     <input type="text" class="form-control" th:field="*{productName}" id="name">
+                    <span class="text-danger" th:errors="*{productName}"></span>
                 </div>
                 <div class="form-group">
                     <label for="price">Price</label>
                     <input type="text" class="form-control" th:field="*{price}" id="price">
+                    <span class="text-danger" th:errors="*{price}"></span>
                 </div>
                 <div class="form-group">
                     <label for="cate">Category</label>
@@ -33,6 +35,7 @@
                 <div class="form-group">
                     <label for="av">Image</label>
                     <input type="file" class="form-control-file" th:name="fileImage" id="av">
+                    <span class="text-danger" th:errors="*{image}"></span>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
             </form>

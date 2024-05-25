@@ -1,10 +1,9 @@
 package com.ra.model.entity;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.*;
 
 @Entity
 @Table(name = "products")
@@ -13,12 +12,16 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
-    @NotBlank()
+    @NotBlank(message = "Tên sản phẩm không rỗng")
     @Column(name = "product_name",length = 200)
     private String productName;
 
+    @NotNull(message = "Giá phẩm không rỗng")
+    @Min(value = 1,message = "giá phải lớn hơn 0")
     @Column(name = "price")
     private Float price;
+
+    @NotEmpty(message = "Trường này không được bỏ rỗng")
     @Column(name = "image")
     private String image;
     @ManyToOne
