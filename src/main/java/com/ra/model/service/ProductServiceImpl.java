@@ -58,4 +58,18 @@ public class ProductServiceImpl implements ProductService{
         }
         return false; // rong thi tra về true
     }
+    @Override
+    public List<Product> searchByName(String keyword,Integer noPage,Integer limit) {
+        return productDAO.search(keyword,noPage,limit);
+    }
+
+    @Override
+    public List<Product> pagination(Integer noPage, Integer limit) {
+        return productDAO.pagination(noPage,limit);
+    }
+
+    @Override
+    public int getTotalPage(Integer limit) {
+        return Math.round((float) productDAO.getTotalPage() / limit);
+    }
 }

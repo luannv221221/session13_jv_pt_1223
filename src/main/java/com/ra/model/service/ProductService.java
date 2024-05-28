@@ -9,4 +9,7 @@ public interface ProductService {
     List<Product> getAll();
     Boolean create(ProductDTO product);
     Boolean checkProductNameExits(String productName);
+    List<Product> searchByName(String keyword,Integer noPage,Integer limit);
+    List<Product> pagination(Integer noPage,Integer limit);
+    int getTotalPage(Integer limit);
 }

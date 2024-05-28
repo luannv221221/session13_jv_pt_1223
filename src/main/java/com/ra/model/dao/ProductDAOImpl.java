@@ -6,11 +6,13 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 @Repository
 public class ProductDAOImpl implements ProductDAO{
     private final SessionFactory sessionFactory;
+    private int totalPage;
     @Autowired
     public ProductDAOImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -60,5 +62,48 @@ public class ProductDAOImpl implements ProductDAO{
             session.close();
         }
        return products;
+    }
+
+    @Override
+    public List<Product> search(String keyword,Integer noPage,Integer limit) {
+        Session session = sessionFactory.openSession();
+        List<Product> products = new ArrayList<>();
+        String hql = "from Product where productName like :keyword";
+        try {
+            Query query = session.createQuery(hql);
+            query.setParameter("keyword","%"+keyword+"%");
+            this.totalPage = query.getResultList().size();
+            query.setFirstResult((noPage -1 )*limit);
+            query.setMaxResults(limit);
+            products = query.getResultList();
+
+        }catch (Exception exception){
+            exception.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return products;
+    }
+
+    @Override
+    public List<Product> pagination(Integer noPage, Integer limit) {
+        Session session = sessionFactory.openSession();
+        List<Product> products = new ArrayList<>();
+        try {
+            Query query = session.createQuery("from Product ");
+            this.totalPage = query.getResultList().size();
+            query.setFirstResult((noPage -1 )*limit);
+            query.setMaxResults(limit);
+            products = query.getResultList();
+        } catch (Exception exception){
+            exception.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return products;
+    }
+    @Override
+    public int getTotalPage(){
+        return this.totalPage;
     }
 }

@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -33,8 +34,20 @@ public class ProductController {
     }
 
     @GetMapping("/product")
-    public String index(Model model){
-        List<Product> products = productService.getAll();
+    public String index(Model model,
+                        @RequestParam(value = "keyword",required = false) String keyword,
+                        @RequestParam(value = "page",defaultValue = "1",required = false) Integer noPage){
+        List<Product> products;
+        int limit = 2;
+        if(keyword != null){
+            products = productService.searchByName(keyword,noPage,limit);
+            model.addAttribute("keyword",keyword);
+        } else {
+            products = productService.pagination(noPage,limit);
+        }
+
+        model.addAttribute("totalPage",productService.getTotalPage(limit));
+        model.addAttribute("currentPage",noPage);
         model.addAttribute("products",products);
         return "product/index";
     }

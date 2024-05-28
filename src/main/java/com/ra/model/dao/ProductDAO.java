@@ -8,4 +8,7 @@ public interface ProductDAO {
     List<Product> findAll();
     Boolean saveOrUpdate(Product product);
     List<Product> findByName(String productName);
+    List<Product> search(String keyword,Integer noPage,Integer limit);
+    List<Product> pagination(Integer noPage,Integer limit);
+    int getTotalPage();
 }
